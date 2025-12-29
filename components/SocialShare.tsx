@@ -97,30 +97,6 @@ export default function SocialShare({ badgeImageUrl, username, fanLevel }: Socia
           <span className="text-2xl">💼</span>
           <span className="text-sm">LinkedIn</span>
         </button>
-
-        <button
-          onClick={shareToFacebook}
-          className="bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-4 rounded-xl transition-all border-2 border-gray-200 hover:border-ethmumbai-red flex flex-col items-center gap-2 shadow-sm hover:shadow-md"
-        >
-          <span className="text-2xl">📘</span>
-          <span className="text-sm">Facebook</span>
-        </button>
-
-        <button
-          onClick={shareToWhatsApp}
-          className="bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-4 rounded-xl transition-all border-2 border-gray-200 hover:border-ethmumbai-red flex flex-col items-center gap-2 shadow-sm hover:shadow-md"
-        >
-          <span className="text-2xl">💬</span>
-          <span className="text-sm">WhatsApp</span>
-        </button>
-
-        <button
-          onClick={shareToInstagram}
-          className="bg-gradient-to-r from-yellow-400 to-ethmumbai-red hover:opacity-90 text-white font-semibold py-3 px-4 rounded-xl transition-all flex flex-col items-center gap-2 shadow-md hover:shadow-lg col-span-2"
-        >
-          <span className="text-2xl">📷</span>
-          <span className="text-sm">Instagram Story</span>
-        </button>
       </div>
     </div>
   )

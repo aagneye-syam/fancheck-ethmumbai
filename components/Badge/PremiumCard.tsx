@@ -44,21 +44,13 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ username, fanLevel, score, su
              style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
 
         {/* Header */}
-        <div className="flex items-center gap-2 mb-8 z-20">
-          <svg className="w-6 h-6 text-white/90" viewBox="0 0 784.37 1277.39" fill="currentColor">
-            <path d="M392.07,0l-8.22,28.01V868.58l8.22,8.22,392.3-231.86L392.07,0Z"/>
-            <path d="M392.07,0L0,644.94l392.07,231.86V0Z"/>
-            <path d="M392.07,953.52l-4.63,5.65v307.3l4.63,10.93,392.59-553.33L392.07,953.52Z"/>
-            <path d="M392.07,1277.39V953.52L0,724.08l392.07,553.31Z"/>
-            <path d="M392.07,868.58l392.3-231.86L392.07,458.75V868.58Z"/>
-            <path d="M0,644.94l392.07,223.64V458.75L0,644.94Z"/>
-          </svg>
-          <span className="text-white font-bold tracking-wider">ETHMumbai</span>
+        <div className="flex items-center justify-center gap-2 mb-8 z-20">
+          <img src="/assets/ethmumbai-logo.svg" alt="ETHMumbai" className="h-12 w-auto" />
         </div>
 
         {/* Title Section */}
         <div className="text-center z-20 mb-4">
-          <h2 className="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 via-yellow-400 to-yellow-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] leading-tight uppercase">
+          <h2 className="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 via-yellow-400 to-yellow-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] leading-tight">
             ETHMumbai
           </h2>
           <h1 className="text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-yellow-100 via-yellow-400 to-yellow-700 drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)] leading-none uppercase">
@@ -68,8 +60,8 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ username, fanLevel, score, su
 
         {/* Central Graphic */}
         <div className="relative w-full flex flex-col items-center justify-center my-4 z-20">
-          {/* Ethereum Trophy */}
-          <div className="animate-bounce mb-[-20px] z-10">
+          {/* Ethereum Trophy - Static */}
+          <div className="mb-[-20px] z-10">
             <svg className="w-24 h-24 text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]" viewBox="0 0 784.37 1277.39" fill="currentColor">
               <path d="M392.07,0l-8.22,28.01V868.58l8.22,8.22,392.3-231.86L392.07,0Z"/>
               <path d="M392.07,0L0,644.94l392.07,231.86V0Z"/>
@@ -118,14 +110,10 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ username, fanLevel, score, su
             ></div>
           </div>
 
-          <div className="flex justify-between items-center text-white text-xs font-bold pt-1">
-            <div className="flex flex-col">
-              <span className="text-white/40 text-[10px] uppercase">Score</span>
-              <span className="text-sm tracking-tight">{formattedScore}/10</span>
-            </div>
-            <div className="flex flex-col text-right">
-              <span className="text-white/40 text-[10px] uppercase">Time</span>
-              <span className="text-sm tracking-tight">{formattedTime}</span>
+          <div className="flex justify-center items-center text-white text-xs font-bold pt-1">
+            <div className="flex flex-col items-center">
+              <span className="text-white/40 text-[10px] uppercase">Final Score</span>
+              <span className="text-2xl tracking-tight text-yellow-400">{formattedScore}/10</span>
             </div>
           </div>
 
