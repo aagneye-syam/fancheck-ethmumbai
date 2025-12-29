@@ -65,11 +65,14 @@ export const updateGame = (
 
   // Check collisions
   const birdX = 100
+  // Make collision box smaller than visual bird for more forgiving gameplay
+  const collisionPadding = BIRD_SIZE * 0.2 // 20% padding on all sides
+  const collisionSize = BIRD_SIZE - (collisionPadding * 2)
   const birdRect = {
-    x: birdX - BIRD_SIZE / 2, // Center the collision box to match visual position
-    y: newBirdY,
-    width: BIRD_SIZE,
-    height: BIRD_SIZE,
+    x: birdX - collisionSize / 2, // Center the collision box to match visual position
+    y: newBirdY + collisionPadding, // Add padding from top
+    width: collisionSize,
+    height: collisionSize,
   }
 
   for (const pipe of newPipes) {
