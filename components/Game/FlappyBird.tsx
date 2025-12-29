@@ -86,25 +86,45 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
     if (!ctx) return
 
     const gameLoop = () => {
+      console.log('Game loop running, gameState:', { gameOver: gameState.gameOver, score: gameState.score, gameOverCalled: gameOverCalledRef.current })
+      
       if (gameState.gameOver && !gameOverCalledRef.current) {
+        console.log('Game over detected! Calling onGameOver callback')
         gameOverCalledRef.current = true
         const fanLevel = calculateFanLevel(gameState.score)
+        console.log('Calculated fan level:', fanLevel, 'Survival time:', gameState.survivalTime)
         useAppStore.getState().setFanLevel(fanLevel)
         useAppStore.getState().setSurvivalTime(gameState.survivalTime)
         onGameOver(fanLevel, false, gameState.survivalTime) // false = lost
+        console.log('onGameOver callback called')
         return
       }
 
       const newState = updateGame(gameState, canvas.width, canvas.height)
+      console.log('Updated game state:', { gameOver: newState.gameOver, score: newState.score })
       
       // Check for completion (score >= 10)
       if (newState.score >= 10 && !newState.gameOver && !gameOverCalledRef.current) {
+        console.log('Completion detected!')
         gameOverCalledRef.current = true
         const fanLevel = calculateFanLevel(newState.score)
         const survivalTime = Math.floor((Date.now() - newState.startTime) / 1000)
         useAppStore.getState().setFanLevel(fanLevel)
         useAppStore.getState().setSurvivalTime(survivalTime)
         onGameOver(fanLevel, true, survivalTime) // true = completed
+        return
+      }
+      
+      // Check if game just ended
+      if (newState.gameOver && !gameState.gameOver && !gameOverCalledRef.current) {
+        console.log('Game just ended! New collision detected')
+        gameOverCalledRef.current = true
+        const fanLevel = calculateFanLevel(newState.score)
+        console.log('Calculated fan level:', fanLevel, 'Survival time:', newState.survivalTime)
+        useAppStore.getState().setFanLevel(fanLevel)
+        useAppStore.getState().setSurvivalTime(newState.survivalTime)
+        onGameOver(fanLevel, false, newState.survivalTime)
+        console.log('onGameOver callback called from new collision')
         return
       }
       

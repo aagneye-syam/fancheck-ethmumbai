@@ -39,18 +39,27 @@ export default function PlayPage() {
   }
 
   const handleGameOver = (level: number, completed: boolean, time: number) => {
-    // Prevent multiple calls
-    if (gameLost || gameCompleted) return
+    console.log('handleGameOver called:', { level, completed, time, gameLost, gameCompleted })
     
+    // Prevent multiple calls
+    if (gameLost || gameCompleted) {
+      console.log('Game over already handled, returning early')
+      return
+    }
+    
+    console.log('Setting game over state...')
     setFanLevel(level)
     setSurvivalTime(time)
     
     if (completed) {
+      console.log('Setting completion state')
       setGameCompleted(true)
       setShowCompletionPopup(true)
     } else {
+      console.log('Setting game lost state')
       setGameLost(true)
     }
+    console.log('State updated, gameLost should be true now')
   }
 
   const handleMakeCard = () => {
@@ -144,7 +153,10 @@ export default function PlayPage() {
         )}
 
         {/* Game Over Popup */}
-        {gameLost && (
+        {gameLost && (() => {
+          console.log('Rendering game over popup, gameLost:', gameLost, 'fanLevel:', fanLevel)
+          return true
+        })() && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-red to-ethmumbai-blue rounded-lg p-8 md:p-12 max-w-md w-full border-4 border-white/30 shadow-2xl">
               <div className="text-center space-y-6">
