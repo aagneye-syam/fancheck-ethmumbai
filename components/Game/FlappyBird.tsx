@@ -14,7 +14,7 @@ import {
 import { useAppStore } from '@/lib/store'
 
 interface FlappyBirdProps {
-  onGameOver: (fanLevel: number, completed: boolean) => void
+  onGameOver: (fanLevel: number, completed: boolean, survivalTime: number) => void
 }
 
 export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
@@ -90,7 +90,8 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
         gameOverCalledRef.current = true
         const fanLevel = calculateFanLevel(gameState.score)
         useAppStore.getState().setFanLevel(fanLevel)
-        onGameOver(fanLevel, false) // false = lost
+        useAppStore.getState().setSurvivalTime(gameState.survivalTime)
+        onGameOver(fanLevel, false, gameState.survivalTime) // false = lost
         return
       }
 
@@ -100,8 +101,10 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
       if (newState.score >= 10 && !newState.gameOver && !gameOverCalledRef.current) {
         gameOverCalledRef.current = true
         const fanLevel = calculateFanLevel(newState.score)
+        const survivalTime = Math.floor((Date.now() - newState.startTime) / 1000)
         useAppStore.getState().setFanLevel(fanLevel)
-        onGameOver(fanLevel, true) // true = completed
+        useAppStore.getState().setSurvivalTime(survivalTime)
+        onGameOver(fanLevel, true, survivalTime) // true = completed
         return
       }
       
