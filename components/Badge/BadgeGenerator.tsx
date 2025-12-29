@@ -16,20 +16,28 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [badgeDataUrl, setBadgeDataUrl] = useState<string | null>(null)
   const [isGenerating, setIsGenerating] = useState(true)
+  const [canvasReady, setCanvasReady] = useState(false)
+
+  // Use callback ref to know when canvas is mounted
+  const canvasCallbackRef = (node: HTMLCanvasElement | null) => {
+    if (node) {
+      canvasRef.current = node
+      setCanvasReady(true)
+      console.log('BadgeGenerator: Canvas mounted and ready')
+    }
+  }
 
   useEffect(() => {
+    if (!canvasReady || !canvasRef.current) {
+      console.log('BadgeGenerator: Waiting for canvas to be ready...', { canvasReady, hasRef: !!canvasRef.current })
+      return
+    }
+
     const generateBadge = async () => {
       console.log('BadgeGenerator: Starting generation', { username, fanLevel, survivalTime, score, hasImage: !!userImage })
       
-      // Wait for canvas to be available
-      let attempts = 0
-      while (!canvasRef.current && attempts < 10) {
-        await new Promise(resolve => setTimeout(resolve, 100))
-        attempts++
-      }
-      
       if (!canvasRef.current) {
-        console.error('BadgeGenerator: Canvas ref is still null after waiting!')
+        console.error('BadgeGenerator: Canvas ref is null!')
         setIsGenerating(false)
         return
       }
@@ -60,13 +68,8 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
       }
     }
 
-    // Use setTimeout to ensure DOM is ready
-    const timer = setTimeout(() => {
-      generateBadge()
-    }, 100)
-
-    return () => clearTimeout(timer)
-  }, [username, fanLevel, survivalTime, score, userImage, onBadgeGenerated])
+    generateBadge()
+  }, [canvasReady, username, fanLevel, survivalTime, score, userImage, onBadgeGenerated])
 
   const handleDownload = () => {
     if (badgeDataUrl) {
@@ -74,50 +77,48 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
     }
   }
 
-  if (isGenerating) {
-    return (
-      <div className="flex items-center justify-center min-h-[600px]">
-        <div className="text-center">
-          <div className="text-4xl mb-4 animate-spin">⚙️</div>
-          <p className="text-white text-xl">Generating your badge...</p>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="space-y-6">
+      {/* Hidden canvas for generation - always render it */}
+      <canvas 
+        ref={canvasCallbackRef} 
+        style={{ display: 'none', position: 'absolute' }}
+        width={1080}
+        height={1920}
+      />
+      
       {/* Badge Preview */}
       <div className="flex justify-center">
         <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-white/20">
-          {badgeDataUrl && (
+          {badgeDataUrl ? (
             <img
               src={badgeDataUrl}
               alt="ETHMumbai Badge"
               className="max-w-full h-auto rounded-lg"
             />
+          ) : (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-center">
+                <div className="text-4xl mb-4 animate-spin">⚙️</div>
+                <p className="text-white text-xl">Generating your badge...</p>
+              </div>
+            </div>
           )}
         </div>
       </div>
 
       {/* Download Button */}
-      <div className="flex justify-center">
-        <button
-          onClick={handleDownload}
-          className="bg-ethmumbai-red hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors flex items-center gap-2"
-        >
-          <span>⬇️</span>
-          <span>Download Badge</span>
-        </button>
-      </div>
-
-      {/* Hidden canvas for generation */}
-      <canvas 
-        ref={canvasRef} 
-        style={{ display: 'none' }}
-        width={1080}
-        height={1920}
-      />
+      {badgeDataUrl && (
+        <div className="flex justify-center">
+          <button
+            onClick={handleDownload}
+            className="bg-ethmumbai-red hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors flex items-center gap-2"
+          >
+            <span>⬇️</span>
+            <span>Download Badge</span>
+          </button>
+        </div>
+      )}
     </div>
   )
 }
