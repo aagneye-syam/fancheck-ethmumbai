@@ -216,7 +216,7 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
     <div className="flex flex-col items-center gap-4">
       <canvas
         ref={canvasRef}
-        className="border-4 border-ethmumbai-blue rounded-lg bg-sky-300 w-full max-w-[800px]"
+        className="border-4 border-white rounded-lg bg-sky-300 w-full max-w-[800px]"
         style={{ height: 'auto', aspectRatio: '4/3' }}
       />
       

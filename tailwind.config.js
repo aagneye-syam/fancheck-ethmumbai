@@ -10,7 +10,7 @@ module.exports = {
       colors: {
         ethmumbai: {
           red: '#FF0000',
-          blue: '#0066FF',
+          blue: '#FFFFFF',
           dark: '#1a1a1a',
         },
       },

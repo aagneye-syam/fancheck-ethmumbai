@@ -43,7 +43,7 @@ export default function ImageUpload({ onImageSelect, onCancel }: ImageUploadProp
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-ethmumbai-dark border-2 border-ethmumbai-blue rounded-lg p-6 max-w-md w-full">
+      <div className="bg-ethmumbai-dark border-2 border-white rounded-lg p-6 max-w-md w-full">
         <h3 className="text-2xl font-bold text-white mb-4">Upload Your Picture</h3>
         <p className="text-white/80 mb-4 text-sm">Required for your badge</p>
         
@@ -95,7 +95,7 @@ export default function ImageUpload({ onImageSelect, onCancel }: ImageUploadProp
           {preview ? (
             <button
               onClick={handleConfirm}
-              className="w-full bg-ethmumbai-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+              className="w-full bg-white hover:bg-white/90 text-ethmumbai-red font-bold py-3 px-4 rounded-lg transition-colors"
             >
               Continue with This Image
             </button>

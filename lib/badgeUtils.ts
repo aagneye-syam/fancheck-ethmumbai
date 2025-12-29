@@ -44,7 +44,7 @@ export const generateBadgeImage = async (
   const gradient = ctx.createLinearGradient(0, 0, 0, height)
   gradient.addColorStop(0, '#0a0a0a')
   gradient.addColorStop(0.3, '#1a1a3e')
-  gradient.addColorStop(0.7, '#0066FF')
+  gradient.addColorStop(0.7, '#FFFFFF')
   gradient.addColorStop(1, '#FF0000')
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, width, height)
@@ -115,7 +115,7 @@ export const generateBadgeImage = async (
       const imgY = cardY + 100
 
       // Glow effect around image
-      ctx.shadowColor = '#0066FF'
+      ctx.shadowColor = '#FFFFFF'
       ctx.shadowBlur = 30
       ctx.save()
       ctx.beginPath()
@@ -179,13 +179,13 @@ export const generateBadgeImage = async (
   // Survival time box
   const timeBoxY = statsY + 180
   ctx.fillStyle = 'rgba(0, 102, 255, 0.1)'
-  ctx.strokeStyle = '#0066FF'
+  ctx.strokeStyle = '#FFFFFF'
   ctx.lineWidth = 2
   drawRoundedRect(ctx, boxX, timeBoxY, boxWidth, boxHeight, 15)
   ctx.fill()
   ctx.stroke()
 
-  ctx.fillStyle = '#0066FF'
+  ctx.fillStyle = '#FFFFFF'
   ctx.font = 'bold 64px Arial'
   ctx.fillText(`${survivalTime}s`, width / 2, timeBoxY + 70)
 

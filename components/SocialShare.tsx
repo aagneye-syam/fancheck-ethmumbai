@@ -89,7 +89,7 @@ export default function SocialShare({ badgeImageUrl, username, fanLevel }: Socia
 
         <button
           onClick={shareToLinkedIn}
-          className="bg-[#0077B5] hover:bg-[#006399] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
+          className="bg-white hover:bg-white/90 text-ethmumbai-red font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base border-2 border-white"
         >
           <span className="text-xl md:text-2xl">💼</span>
           <span>LinkedIn</span>

@@ -4,7 +4,7 @@
 
 :root {
   --ethmumbai-red: #FF0000;
-  --ethmumbai-blue: #0066FF;
+  --ethmumbai-blue: #FFFFFF;
   --ethmumbai-dark: #1a1a1a;
 }
 
@@ -51,7 +51,7 @@ a {
 }
 
 .confetti:nth-child(odd) {
-  background: var(--ethmumbai-blue);
+  background: #FFFFFF;
 }
 
 .confetti:nth-child(3n) {

@@ -50,11 +50,11 @@ export default function UsernameInput({ onUsernameSubmit }: UsernameInputProps) 
                 setError('')
               }}
               placeholder="@username"
-              className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-ethmumbai-blue"
+              className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white"
             />
             <button
               type="submit"
-              className="bg-ethmumbai-blue hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-lg transition-colors"
+              className="bg-white hover:bg-white/90 text-ethmumbai-red font-bold px-6 py-3 rounded-lg transition-colors"
             >
               Submit
             </button>

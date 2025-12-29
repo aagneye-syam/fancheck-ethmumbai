@@ -129,7 +129,7 @@ export default function PlayPage() {
         {/* Completion Popup */}
         {showCompletionPopup && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-gradient-to-br from-ethmumbai-blue to-ethmumbai-red rounded-lg p-8 md:p-12 max-w-md w-full border-4 border-white/30 shadow-2xl">
+            <div className="bg-gradient-to-br from-white to-ethmumbai-red rounded-lg p-8 md:p-12 max-w-md w-full border-4 border-white/30 shadow-2xl">
               <div className="text-center space-y-6">
                 <div className="text-6xl md:text-8xl mb-4">🏆</div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
@@ -158,7 +158,7 @@ export default function PlayPage() {
           return true
         })() && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-red to-ethmumbai-blue rounded-lg p-8 md:p-12 max-w-md w-full border-4 border-white/30 shadow-2xl">
+            <div className="bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-red to-white rounded-lg p-8 md:p-12 max-w-md w-full border-4 border-white/30 shadow-2xl">
               <div className="text-center space-y-6">
                 <div className="text-6xl md:text-8xl mb-4">💥</div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
@@ -176,7 +176,7 @@ export default function PlayPage() {
                 <div className="flex flex-col md:flex-row gap-4">
                   <button
                     onClick={handleMakeCard}
-                    className="flex-1 bg-ethmumbai-blue hover:bg-blue-600 text-white font-bold text-lg py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                    className="flex-1 bg-white hover:bg-white/90 text-ethmumbai-red font-bold text-lg py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg"
                   >
                     Print Card 🎴
                   </button>
