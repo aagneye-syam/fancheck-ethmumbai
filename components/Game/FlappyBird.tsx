@@ -22,11 +22,21 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
   const animationFrameRef = useRef<number>()
   const [gameState, setGameState] = useState<GameState | null>(null)
   const gameStateRef = useRef<GameState | null>(null)
+  const birdImageRef = useRef<HTMLImageElement | null>(null)
 
   // Keep ref in sync with state
   useEffect(() => {
     gameStateRef.current = gameState
   }, [gameState])
+
+  // Load bird image
+  useEffect(() => {
+    const img = new Image()
+    img.src = '/assets/flappy-bird.png'
+    img.onload = () => {
+      birdImageRef.current = img
+    }
+  }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -110,10 +120,22 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
       }
 
       // Bird
-      ctx.fillStyle = '#FFD700'
-      ctx.beginPath()
-      ctx.arc(100, newState.birdY + BIRD_SIZE / 2, BIRD_SIZE / 2, 0, Math.PI * 2)
-      ctx.fill()
+      if (birdImageRef.current) {
+        // Draw bird image
+        ctx.drawImage(
+          birdImageRef.current,
+          100 - BIRD_SIZE / 2,
+          newState.birdY,
+          BIRD_SIZE,
+          BIRD_SIZE
+        )
+      } else {
+        // Fallback to circle if image not loaded
+        ctx.fillStyle = '#FFD700'
+        ctx.beginPath()
+        ctx.arc(100, newState.birdY + BIRD_SIZE / 2, BIRD_SIZE / 2, 0, Math.PI * 2)
+        ctx.fill()
+      }
 
       // Score
       ctx.fillStyle = '#FFFFFF'
