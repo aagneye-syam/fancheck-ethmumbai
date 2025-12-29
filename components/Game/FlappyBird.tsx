@@ -14,7 +14,7 @@ import {
 import { useAppStore } from '@/lib/store'
 
 interface FlappyBirdProps {
-  onGameOver: (fanLevel: number) => void
+  onGameOver: (fanLevel: number, completed: boolean) => void
 }
 
 export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
@@ -88,11 +88,20 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
       if (gameState.gameOver) {
         const fanLevel = calculateFanLevel(gameState.score)
         useAppStore.getState().setFanLevel(fanLevel)
-        onGameOver(fanLevel)
+        onGameOver(fanLevel, false) // false = lost
         return
       }
 
       const newState = updateGame(gameState, canvas.width, canvas.height)
+      
+      // Check for completion (score >= 10)
+      if (newState.score >= 10 && !newState.gameOver) {
+        const fanLevel = calculateFanLevel(newState.score)
+        useAppStore.getState().setFanLevel(fanLevel)
+        onGameOver(fanLevel, true) // true = completed
+        return
+      }
+      
       setGameState(newState)
 
       // Draw
@@ -137,11 +146,12 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
         ctx.fill()
       }
 
-      // Score
+      // Score (display with 1 decimal place, max 10)
       ctx.fillStyle = '#FFFFFF'
       ctx.font = 'bold 32px Arial'
       ctx.textAlign = 'left'
-      ctx.fillText(`Score: ${newState.score}`, 20, 40)
+      const displayScore = Math.min(10, newState.score).toFixed(1)
+      ctx.fillText(`Score: ${displayScore}/10`, 20, 40)
 
       if (!newState.gameOver && newState.gameStarted) {
         animationFrameRef.current = requestAnimationFrame(gameLoop)

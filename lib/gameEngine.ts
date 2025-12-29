@@ -105,14 +105,15 @@ export const updateGame = (
       return { ...state, gameOver: true }
     }
 
-    // Score point
+    // Score point (0.5 per pillar, max 10)
     if (pipe.x + PIPE_WIDTH < birdX && pipe.x + PIPE_WIDTH >= birdX - PIPE_SPEED) {
+      const newScore = Math.min(10, state.score + 0.5)
       return {
         ...state,
         birdY: newBirdY,
         birdVelocity: newVelocity,
         pipes: newPipes,
-        score: state.score + 1,
+        score: newScore,
       }
     }
   }
@@ -139,9 +140,8 @@ export const jump = (state: GameState): GameState => {
 }
 
 export const calculateFanLevel = (score: number): number => {
-  // Map score to 0-100 fan level
-  // Higher scores = higher fan level
-  // Cap at 100
-  return Math.min(100, Math.floor(score * 2))
+  // Score is out of 10, map to 0-100 fan level
+  // score of 10 = 100 fan level
+  return Math.min(100, Math.floor(score * 10))
 }
 
