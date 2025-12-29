@@ -94,7 +94,7 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
             <img
               src={badgeDataUrl}
               alt="ETHMumbai Badge"
-              className="max-w-full h-auto rounded-lg"
+              className="max-w-sm md:max-w-md lg:max-w-lg h-auto rounded-lg shadow-2xl"
             />
           ) : (
             <div className="flex items-center justify-center min-h-[400px]">
