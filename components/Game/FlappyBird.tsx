@@ -147,15 +147,37 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
     }
   }, [gameState, onGameOver])
 
+  const handleMobileJump = () => {
+    const currentState = gameStateRef.current
+    if (currentState) {
+      setGameState(jump(currentState))
+    }
+  }
+
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center gap-4">
       <canvas
         ref={canvasRef}
-        className="border-4 border-ethmumbai-blue rounded-lg bg-sky-300"
-        style={{ maxWidth: '100%', height: 'auto' }}
+        className="border-4 border-ethmumbai-blue rounded-lg bg-sky-300 w-full max-w-[800px]"
+        style={{ height: 'auto', aspectRatio: '4/3' }}
       />
-      <p className="mt-4 text-white/80 text-sm">
+      
+      {/* Desktop Instructions */}
+      <p className="hidden md:block text-white/80 text-sm">
         Click or press Space to flap
+      </p>
+      
+      {/* Mobile Jump Button */}
+      <button
+        onClick={handleMobileJump}
+        className="md:hidden bg-ethmumbai-red hover:bg-red-600 active:bg-red-700 text-white font-bold text-xl px-12 py-6 rounded-lg shadow-lg transition-all active:scale-95 touch-manipulation"
+      >
+        TAP TO JUMP 🚀
+      </button>
+      
+      {/* Mobile Instructions */}
+      <p className="md:hidden text-white/80 text-sm text-center">
+        Tap the button or the game to flap
       </p>
     </div>
   )
