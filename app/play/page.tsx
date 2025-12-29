@@ -77,8 +77,12 @@ export default function PlayPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white p-4 md:p-6">
-      <div className="max-w-6xl mx-auto">
+    <main className="min-h-screen bg-white p-4 md:p-6 relative overflow-hidden">
+      {/* Red accent gradient in corners */}
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-ethmumbai-red to-red-300 opacity-20 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-gradient-to-tr from-yellow-400 to-yellow-200 opacity-10 rounded-full blur-3xl"></div>
+      
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
