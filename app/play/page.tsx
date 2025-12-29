@@ -8,11 +8,16 @@ import { useAppStore } from '@/lib/store'
 
 export default function PlayPage() {
   const router = useRouter()
-  const { username, setUsername } = useAppStore()
+  const { username, setUsername, clearFanLevel } = useAppStore()
   const [localUsername, setLocalUsername] = useState<string | null>(null)
   const [gameUnlocked, setGameUnlocked] = useState(false)
   const [gameCompleted, setGameCompleted] = useState(false)
   const [fanLevel, setFanLevel] = useState<number | null>(null)
+
+  useEffect(() => {
+    // Clear fan level on page load to restart game
+    clearFanLevel()
+  }, [clearFanLevel])
 
   useEffect(() => {
     // Check if username exists in store
