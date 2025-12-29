@@ -12,7 +12,7 @@ const JUMP_STRENGTH = -6
 const PIPE_SPEED = 2
 export const PIPE_WIDTH = 60
 export const PIPE_GAP = 150
-export const BIRD_SIZE = 30
+export const BIRD_SIZE = 40
 
 export const createInitialState = (canvasHeight: number): GameState => ({
   birdY: canvasHeight / 2,
