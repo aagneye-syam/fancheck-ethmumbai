@@ -2,36 +2,71 @@ export const generateBadgeImage = async (
   canvas: HTMLCanvasElement,
   username: string,
   fanLevel: number,
+  survivalTime: number,
+  score: number,
   userImage?: string
 ): Promise<string> => {
   const ctx = canvas.getContext('2d')
   if (!ctx) throw new Error('Could not get canvas context')
 
-  const width = 800
-  const height = 600
+  const width = 1080
+  const height = 1920
   canvas.width = width
   canvas.height = height
 
-  // Background gradient
-  const gradient = ctx.createLinearGradient(0, 0, width, height)
-  gradient.addColorStop(0, '#1a1a1a')
-  gradient.addColorStop(0.5, '#0066FF')
+  // Premium gradient background
+  const gradient = ctx.createLinearGradient(0, 0, 0, height)
+  gradient.addColorStop(0, '#0a0a0a')
+  gradient.addColorStop(0.3, '#1a1a3e')
+  gradient.addColorStop(0.7, '#0066FF')
   gradient.addColorStop(1, '#FF0000')
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, width, height)
 
-  // ETHMumbai logo area
-  ctx.fillStyle = '#0066FF'
-  ctx.font = 'bold 48px Arial'
-  ctx.textAlign = 'center'
-  ctx.fillText('ETHMUMBAI', width / 2, 80)
+  // Add subtle pattern overlay
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.03)'
+  for (let i = 0; i < 50; i++) {
+    ctx.fillRect(Math.random() * width, Math.random() * height, 2, 2)
+  }
 
-  // Title
+  // Header section
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
+  ctx.fillRect(0, 0, width, 300)
+
+  // ETHMumbai logo
   ctx.fillStyle = '#FFFFFF'
-  ctx.font = 'bold 36px Arial'
-  ctx.fillText('Maxi Checker', width / 2, 130)
+  ctx.font = 'bold 72px Arial'
+  ctx.textAlign = 'center'
+  ctx.fillText('ETHMUMBAI', width / 2, 120)
 
-  // User image (if provided)
+  // Subtitle
+  ctx.fillStyle = '#FFD700'
+  ctx.font = '36px Arial'
+  ctx.fillText('Maxi Checker', width / 2, 180)
+
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = '24px Arial'
+  ctx.fillText('OFFICIAL', width / 2, 240)
+
+  // Main card section
+  const cardY = 350
+  const cardHeight = 1100
+  
+  // Card background with premium border
+  ctx.fillStyle = 'rgba(10, 10, 10, 0.9)'
+  ctx.strokeStyle = '#FFD700'
+  ctx.lineWidth = 8
+  ctx.beginPath()
+  ctx.roundRect(80, cardY, width - 160, cardHeight, 30)
+  ctx.fill()
+  ctx.stroke()
+
+  // Inner glow effect
+  ctx.strokeStyle = 'rgba(255, 215, 0, 0.3)'
+  ctx.lineWidth = 20
+  ctx.stroke()
+
+  // User image (centered and large)
   if (userImage) {
     const img = new Image()
     await new Promise((resolve, reject) => {
@@ -40,41 +75,98 @@ export const generateBadgeImage = async (
       img.src = userImage
     })
 
-    const imgSize = 150
+    const imgSize = 280
     const imgX = width / 2 - imgSize / 2
-    const imgY = 180
+    const imgY = cardY + 100
 
-    // Draw circular image
+    // Glow effect around image
+    ctx.shadowColor = '#0066FF'
+    ctx.shadowBlur = 30
     ctx.save()
     ctx.beginPath()
     ctx.arc(imgX + imgSize / 2, imgY + imgSize / 2, imgSize / 2, 0, Math.PI * 2)
+    ctx.strokeStyle = '#FFD700'
+    ctx.lineWidth = 6
+    ctx.stroke()
     ctx.clip()
     ctx.drawImage(img, imgX, imgY, imgSize, imgSize)
     ctx.restore()
+    ctx.shadowBlur = 0
   }
 
   // Username
   ctx.fillStyle = '#FFFFFF'
-  ctx.font = 'bold 32px Arial'
-  ctx.fillText(`@${username}`, width / 2, userImage ? 360 : 250)
+  ctx.font = 'bold 56px Arial'
+  ctx.textAlign = 'center'
+  ctx.fillText(`@${username}`, width / 2, cardY + 480)
 
-  // Fan Level
+  // Badge title
   ctx.fillStyle = '#FFD700'
-  ctx.font = 'bold 72px Arial'
-  ctx.fillText(`${fanLevel}`, width / 2, userImage ? 450 : 340)
+  ctx.font = '32px Arial'
+  ctx.fillText('TOP 10% PLAYER', width / 2, cardY + 570)
 
-  // Fan Level Label
+  // Fan Level section
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = '32px Arial'
+  ctx.fillText('ETHMumbai Stan', width / 2, cardY + 650)
+
+  ctx.font = '24px Arial'
+  ctx.fillStyle = '#AAAAAA'
+  ctx.fillText('A symbol of excellence.', width / 2, cardY + 690)
+
+  // Stats section with boxes
+  const statsY = cardY + 780
+  const boxWidth = 400
+  const boxHeight = 140
+  const boxX = width / 2 - boxWidth / 2
+
+  // Score box
+  ctx.fillStyle = 'rgba(255, 215, 0, 0.1)'
+  ctx.strokeStyle = '#FFD700'
+  ctx.lineWidth = 2
+  ctx.beginPath()
+  ctx.roundRect(boxX, statsY, boxWidth, boxHeight, 15)
+  ctx.fill()
+  ctx.stroke()
+
+  ctx.fillStyle = '#FFD700'
+  ctx.font = 'bold 64px Arial'
+  ctx.fillText(`${score.toFixed(1)}`, width / 2, statsY + 70)
+
   ctx.fillStyle = '#FFFFFF'
   ctx.font = '24px Arial'
-  ctx.fillText('Fan Level', width / 2, userImage ? 490 : 380)
+  ctx.fillText('FINAL SCORE', width / 2, statsY + 110)
 
-  // Decorative elements
-  ctx.strokeStyle = '#FFFFFF'
-  ctx.lineWidth = 3
+  // Survival time box
+  const timeBoxY = statsY + 180
+  ctx.fillStyle = 'rgba(0, 102, 255, 0.1)'
+  ctx.strokeStyle = '#0066FF'
+  ctx.lineWidth = 2
   ctx.beginPath()
-  ctx.moveTo(100, height - 100)
-  ctx.lineTo(width - 100, height - 100)
+  ctx.roundRect(boxX, timeBoxY, boxWidth, boxHeight, 15)
+  ctx.fill()
   ctx.stroke()
+
+  ctx.fillStyle = '#0066FF'
+  ctx.font = 'bold 64px Arial'
+  ctx.fillText(`${survivalTime}s`, width / 2, timeBoxY + 70)
+
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = '24px Arial'
+  ctx.fillText('SURVIVAL TIME', width / 2, timeBoxY + 110)
+
+  // Footer
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.6)'
+  ctx.fillRect(0, height - 220, width, 220)
+
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = '28px Arial'
+  ctx.textAlign = 'center'
+  ctx.fillText('Fan Level Achievement', width / 2, height - 140)
+
+  ctx.fillStyle = '#FFD700'
+  ctx.font = 'bold 72px Arial'
+  ctx.fillText(`${fanLevel}`, width / 2, height - 60)
 
   return canvas.toDataURL('image/png')
 }
