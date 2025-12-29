@@ -1,3 +1,25 @@
+// Helper function to draw rounded rectangle
+const drawRoundedRect = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number
+) => {
+  ctx.beginPath()
+  ctx.moveTo(x + radius, y)
+  ctx.lineTo(x + width - radius, y)
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
+  ctx.lineTo(x + width, y + height - radius)
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+  ctx.lineTo(x + radius, y + height)
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
+  ctx.lineTo(x, y + radius)
+  ctx.quadraticCurveTo(x, y, x + radius, y)
+  ctx.closePath()
+}
+
 export const generateBadgeImage = async (
   canvas: HTMLCanvasElement,
   username: string,
@@ -6,6 +28,8 @@ export const generateBadgeImage = async (
   score: number,
   userImage?: string
 ): Promise<string> => {
+  console.log('Starting badge generation:', { username, fanLevel, survivalTime, score, hasImage: !!userImage })
+  
   const ctx = canvas.getContext('2d')
   if (!ctx) throw new Error('Could not get canvas context')
 
@@ -13,6 +37,8 @@ export const generateBadgeImage = async (
   const height = 1920
   canvas.width = width
   canvas.height = height
+  
+  console.log('Canvas size set:', { width, height })
 
   // Premium gradient background
   const gradient = ctx.createLinearGradient(0, 0, 0, height)
@@ -56,42 +82,56 @@ export const generateBadgeImage = async (
   ctx.fillStyle = 'rgba(10, 10, 10, 0.9)'
   ctx.strokeStyle = '#FFD700'
   ctx.lineWidth = 8
-  ctx.beginPath()
-  ctx.roundRect(80, cardY, width - 160, cardHeight, 30)
+  drawRoundedRect(ctx, 80, cardY, width - 160, cardHeight, 30)
   ctx.fill()
   ctx.stroke()
 
   // Inner glow effect
   ctx.strokeStyle = 'rgba(255, 215, 0, 0.3)'
   ctx.lineWidth = 20
+  drawRoundedRect(ctx, 80, cardY, width - 160, cardHeight, 30)
   ctx.stroke()
 
   // User image (centered and large)
   if (userImage) {
-    const img = new Image()
-    await new Promise((resolve, reject) => {
-      img.onload = resolve
-      img.onerror = reject
-      img.src = userImage
-    })
+    console.log('Loading user image...')
+    try {
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      await new Promise((resolve, reject) => {
+        img.onload = () => {
+          console.log('User image loaded successfully')
+          resolve(null)
+        }
+        img.onerror = (err) => {
+          console.error('Error loading user image:', err)
+          reject(err)
+        }
+        img.src = userImage
+      })
 
-    const imgSize = 280
-    const imgX = width / 2 - imgSize / 2
-    const imgY = cardY + 100
+      const imgSize = 280
+      const imgX = width / 2 - imgSize / 2
+      const imgY = cardY + 100
 
-    // Glow effect around image
-    ctx.shadowColor = '#0066FF'
-    ctx.shadowBlur = 30
-    ctx.save()
-    ctx.beginPath()
-    ctx.arc(imgX + imgSize / 2, imgY + imgSize / 2, imgSize / 2, 0, Math.PI * 2)
-    ctx.strokeStyle = '#FFD700'
-    ctx.lineWidth = 6
-    ctx.stroke()
-    ctx.clip()
-    ctx.drawImage(img, imgX, imgY, imgSize, imgSize)
-    ctx.restore()
-    ctx.shadowBlur = 0
+      // Glow effect around image
+      ctx.shadowColor = '#0066FF'
+      ctx.shadowBlur = 30
+      ctx.save()
+      ctx.beginPath()
+      ctx.arc(imgX + imgSize / 2, imgY + imgSize / 2, imgSize / 2, 0, Math.PI * 2)
+      ctx.strokeStyle = '#FFD700'
+      ctx.lineWidth = 6
+      ctx.stroke()
+      ctx.clip()
+      ctx.drawImage(img, imgX, imgY, imgSize, imgSize)
+      ctx.restore()
+      ctx.shadowBlur = 0
+    } catch (error) {
+      console.error('Failed to load user image, continuing without it:', error)
+    }
+  } else {
+    console.log('No user image provided')
   }
 
   // Username
@@ -124,8 +164,7 @@ export const generateBadgeImage = async (
   ctx.fillStyle = 'rgba(255, 215, 0, 0.1)'
   ctx.strokeStyle = '#FFD700'
   ctx.lineWidth = 2
-  ctx.beginPath()
-  ctx.roundRect(boxX, statsY, boxWidth, boxHeight, 15)
+  drawRoundedRect(ctx, boxX, statsY, boxWidth, boxHeight, 15)
   ctx.fill()
   ctx.stroke()
 
@@ -142,8 +181,7 @@ export const generateBadgeImage = async (
   ctx.fillStyle = 'rgba(0, 102, 255, 0.1)'
   ctx.strokeStyle = '#0066FF'
   ctx.lineWidth = 2
-  ctx.beginPath()
-  ctx.roundRect(boxX, timeBoxY, boxWidth, boxHeight, 15)
+  drawRoundedRect(ctx, boxX, timeBoxY, boxWidth, boxHeight, 15)
   ctx.fill()
   ctx.stroke()
 
@@ -168,7 +206,10 @@ export const generateBadgeImage = async (
   ctx.font = 'bold 72px Arial'
   ctx.fillText(`${fanLevel}`, width / 2, height - 60)
 
-  return canvas.toDataURL('image/png')
+  console.log('Badge generation complete, converting to data URL...')
+  const dataUrl = canvas.toDataURL('image/png')
+  console.log('Badge generated successfully, length:', dataUrl.length)
+  return dataUrl
 }
 
 export const downloadBadge = (dataUrl: string, filename: string) => {

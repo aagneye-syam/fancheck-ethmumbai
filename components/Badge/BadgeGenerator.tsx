@@ -19,10 +19,16 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
 
   useEffect(() => {
     const generateBadge = async () => {
-      if (!canvasRef.current) return
+      console.log('BadgeGenerator: Starting generation', { username, fanLevel, survivalTime, score, hasImage: !!userImage })
+      if (!canvasRef.current) {
+        console.error('BadgeGenerator: Canvas ref is null!')
+        return
+      }
 
       try {
+        console.log('BadgeGenerator: Setting isGenerating to true')
         setIsGenerating(true)
+        console.log('BadgeGenerator: Calling generateBadgeImage...')
         const dataUrl = await generateBadgeImage(
           canvasRef.current,
           username,
@@ -31,17 +37,22 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
           score,
           userImage
         )
+        console.log('BadgeGenerator: Badge generated, dataUrl length:', dataUrl.length)
         setBadgeDataUrl(dataUrl)
+        console.log('BadgeGenerator: Badge data URL set, calling onBadgeGenerated callback')
         onBadgeGenerated?.(dataUrl)
+        console.log('BadgeGenerator: All done!')
       } catch (error) {
-        console.error('Error generating badge:', error)
+        console.error('BadgeGenerator: Error generating badge:', error)
+        setIsGenerating(false)
       } finally {
+        console.log('BadgeGenerator: Setting isGenerating to false')
         setIsGenerating(false)
       }
     }
 
     generateBadge()
-  }, [username, fanLevel, survivalTime, score, userImage])
+  }, [username, fanLevel, survivalTime, score, userImage, onBadgeGenerated])
 
   const handleDownload = () => {
     if (badgeDataUrl) {
