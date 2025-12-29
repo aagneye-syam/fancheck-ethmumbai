@@ -10,7 +10,7 @@ import Confetti from '@/components/Confetti'
 
 export default function BadgePage() {
   const router = useRouter()
-  const { username, fanLevel } = useAppStore()
+  const { username, fanLevel, survivalTime, userImage: storedImage, setUserImage } = useAppStore()
   const [showImageUpload, setShowImageUpload] = useState(true)
   const [userImage, setUserImage] = useState<string | undefined>(undefined)
   const [badgeImageUrl, setBadgeImageUrl] = useState<string>('')
@@ -26,6 +26,7 @@ export default function BadgePage() {
   }, [username, fanLevel, router])
 
   const handleImageSelect = (imageUrl: string) => {
+    setLocalUserImage(imageUrl)
     setUserImage(imageUrl)
     setShowImageUpload(false)
     setImageUploadDecided(true)
@@ -69,6 +70,8 @@ export default function BadgePage() {
             <BadgeGenerator
               username={username}
               fanLevel={fanLevel}
+              survivalTime={survivalTime || 0}
+              score={score}
               userImage={userImage}
               onBadgeGenerated={handleBadgeGenerated}
             />
