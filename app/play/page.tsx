@@ -13,10 +13,13 @@ export default function PlayPage() {
   const [gameUnlocked, setGameUnlocked] = useState(false)
   const [gameCompleted, setGameCompleted] = useState(false)
   const [fanLevel, setFanLevel] = useState<number | null>(null)
+  const [gameKey, setGameKey] = useState(0)
 
   useEffect(() => {
     // Clear fan level on page load to restart game
     clearFanLevel()
+    // Generate new key to force component remount
+    setGameKey(Date.now())
   }, [clearFanLevel])
 
   useEffect(() => {
@@ -88,7 +91,7 @@ export default function PlayPage() {
         {/* Unlocked Game Section */}
         {gameUnlocked && !gameCompleted && (
           <div className="bg-white/10 backdrop-blur-lg rounded-lg p-8 border border-white/20">
-            <FlappyBird onGameOver={handleGameOver} />
+            <FlappyBird key={gameKey} onGameOver={handleGameOver} />
           </div>
         )}
 
