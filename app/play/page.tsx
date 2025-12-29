@@ -77,15 +77,15 @@ export default function PlayPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-blue to-ethmumbai-red p-4 md:p-8">
+    <main className="min-h-screen bg-white p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-4 md:mb-8">
-          <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-2 md:mb-4">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             ETHMumbai Maxi Checker
           </h1>
           {localUsername && (
-            <p className="text-lg md:text-xl text-white/90">
+            <p className="text-lg text-gray-700">
               Welcome, @{localUsername}!
             </p>
           )}
@@ -93,8 +93,8 @@ export default function PlayPage() {
 
         {/* Username Input Section */}
         {!gameUnlocked && (
-          <div className="mb-6 md:mb-12">
-            <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 md:p-8 border border-white/20">
+          <div className="mb-6">
+            <div className="bg-white rounded-2xl shadow-xl border-2 border-gray-100 p-6 max-w-2xl mx-auto">
               <UsernameInput onUsernameSubmit={handleUsernameSubmit} />
             </div>
           </div>
@@ -102,18 +102,18 @@ export default function PlayPage() {
 
         {/* Locked Game Section */}
         {!gameUnlocked && (
-          <div className="bg-white/5 backdrop-blur-lg rounded-lg p-4 md:p-8 border border-white/10 relative overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10">
+          <div className="bg-gray-100 rounded-2xl p-8 border-2 border-gray-200 relative overflow-hidden max-w-4xl mx-auto">
+            <div className="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm z-10">
               <div className="text-center px-4">
-                <div className="text-4xl md:text-6xl mb-4">🔒</div>
-                <p className="text-lg md:text-2xl text-white font-bold">
+                <div className="text-5xl mb-4">🔒</div>
+                <p className="text-xl font-bold text-gray-900">
                   Enter your username to unlock the game
                 </p>
               </div>
             </div>
-            <div className="opacity-30">
-              <div className="w-full h-64 md:h-96 bg-gray-800 rounded-lg flex items-center justify-center">
-                <p className="text-white/50">Game Locked</p>
+            <div className="opacity-20">
+              <div className="w-full h-64 bg-gray-300 rounded-lg flex items-center justify-center">
+                <p className="text-gray-600">Game Locked</p>
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function PlayPage() {
 
         {/* Unlocked Game Section */}
         {gameUnlocked && !gameCompleted && !gameLost && (
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 md:p-8 border border-white/20">
+          <div className="bg-white rounded-2xl shadow-xl border-2 border-gray-100 p-6 max-w-4xl mx-auto">
             <FlappyBird key={gameKey} onGameOver={handleGameOver} />
           </div>
         )}

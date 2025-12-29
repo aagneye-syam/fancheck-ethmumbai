@@ -34,13 +34,13 @@ export default function UsernameInput({ onUsernameSubmit }: UsernameInputProps) 
   }
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="username" className="block text-white text-lg mb-2">
+          <label htmlFor="username" className="block text-gray-900 text-lg font-semibold mb-3 text-center">
             Enter your Twitter/X username
           </label>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <input
               id="username"
               type="text"
@@ -50,16 +50,16 @@ export default function UsernameInput({ onUsernameSubmit }: UsernameInputProps) 
                 setError('')
               }}
               placeholder="@username"
-              className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white"
+              className="flex-1 px-4 py-3 rounded-xl bg-gray-50 border-2 border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ethmumbai-red focus:border-transparent"
             />
             <button
               type="submit"
-              className="bg-white hover:bg-white/90 text-ethmumbai-red font-bold px-6 py-3 rounded-lg transition-colors"
+              className="bg-ethmumbai-red hover:bg-red-600 text-white font-bold px-8 py-3 rounded-xl transition-all shadow-md hover:shadow-lg"
             >
               Submit
             </button>
           </div>
-          {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
+          {error && <p className="text-ethmumbai-red text-sm mt-2 text-center font-medium">{error}</p>}
         </div>
       </form>
     </div>
