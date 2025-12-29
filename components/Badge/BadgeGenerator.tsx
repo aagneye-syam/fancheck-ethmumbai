@@ -6,11 +6,13 @@ import { generateBadgeImage, downloadBadge } from '@/lib/badgeUtils'
 interface BadgeGeneratorProps {
   username: string
   fanLevel: number
+  survivalTime: number
+  score: number
   userImage?: string
   onBadgeGenerated?: (imageUrl: string) => void
 }
 
-export default function BadgeGenerator({ username, fanLevel, userImage, onBadgeGenerated }: BadgeGeneratorProps) {
+export default function BadgeGenerator({ username, fanLevel, survivalTime, score, userImage, onBadgeGenerated }: BadgeGeneratorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [badgeDataUrl, setBadgeDataUrl] = useState<string | null>(null)
   const [isGenerating, setIsGenerating] = useState(true)
@@ -25,6 +27,8 @@ export default function BadgeGenerator({ username, fanLevel, userImage, onBadgeG
           canvasRef.current,
           username,
           fanLevel,
+          survivalTime,
+          score,
           userImage
         )
         setBadgeDataUrl(dataUrl)
@@ -37,7 +41,7 @@ export default function BadgeGenerator({ username, fanLevel, userImage, onBadgeG
     }
 
     generateBadge()
-  }, [username, fanLevel, userImage])
+  }, [username, fanLevel, survivalTime, score, userImage])
 
   const handleDownload = () => {
     if (badgeDataUrl) {
