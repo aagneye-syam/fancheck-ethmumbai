@@ -55,7 +55,7 @@ export const updateGame = (
 
   // Add new pipe
   const lastPipe = newPipes[newPipes.length - 1]
-  if (!lastPipe || lastPipe.x < canvasWidth - 200) {
+  if (!lastPipe || lastPipe.x < canvasWidth - 350) {
     const gapY = Math.random() * (canvasHeight - PIPE_GAP - 100) + 50
     newPipes.push({
       x: canvasWidth,
