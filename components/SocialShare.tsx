@@ -74,60 +74,53 @@ export default function SocialShare({ badgeImageUrl, username, fanLevel }: Socia
 
   return (
     <div className="space-y-4">
-      <h3 className="text-xl md:text-2xl font-bold text-white text-center mb-4 md:mb-6">
-        Share Your Badge
-      </h3>
+      <div className="text-center mb-4">
+        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-1">
+          Share Your Badge
+        </h3>
+        <div className="h-1 w-16 bg-gradient-to-r from-ethmumbai-red to-yellow-400 rounded-full mx-auto"></div>
+      </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+      <div className="grid grid-cols-2 gap-3">
         <button
           onClick={shareToTwitter}
-          className="bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
+          className="bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-4 rounded-xl transition-all border-2 border-gray-200 hover:border-ethmumbai-red flex flex-col items-center gap-2 shadow-sm hover:shadow-md"
         >
-          <span className="text-xl md:text-2xl">🐦</span>
-          <span>Twitter/X</span>
+          <span className="text-2xl">🐦</span>
+          <span className="text-sm">Twitter/X</span>
         </button>
 
         <button
           onClick={shareToLinkedIn}
-          className="bg-white hover:bg-white/90 text-ethmumbai-red font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base border-2 border-white"
+          className="bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-4 rounded-xl transition-all border-2 border-gray-200 hover:border-ethmumbai-red flex flex-col items-center gap-2 shadow-sm hover:shadow-md"
         >
-          <span className="text-xl md:text-2xl">💼</span>
-          <span>LinkedIn</span>
+          <span className="text-2xl">💼</span>
+          <span className="text-sm">LinkedIn</span>
         </button>
 
         <button
           onClick={shareToFacebook}
-          className="bg-[#1877F2] hover:bg-[#166fe5] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
+          className="bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-4 rounded-xl transition-all border-2 border-gray-200 hover:border-ethmumbai-red flex flex-col items-center gap-2 shadow-sm hover:shadow-md"
         >
-          <span className="text-xl md:text-2xl">📘</span>
-          <span>Facebook</span>
+          <span className="text-2xl">📘</span>
+          <span className="text-sm">Facebook</span>
         </button>
 
         <button
           onClick={shareToWhatsApp}
-          className="bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
+          className="bg-white hover:bg-gray-50 text-gray-800 font-semibold py-3 px-4 rounded-xl transition-all border-2 border-gray-200 hover:border-ethmumbai-red flex flex-col items-center gap-2 shadow-sm hover:shadow-md"
         >
-          <span className="text-xl md:text-2xl">💬</span>
-          <span>WhatsApp</span>
+          <span className="text-2xl">💬</span>
+          <span className="text-sm">WhatsApp</span>
         </button>
 
         <button
           onClick={shareToInstagram}
-          className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] hover:opacity-90 text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-opacity flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
+          className="bg-gradient-to-r from-yellow-400 to-ethmumbai-red hover:opacity-90 text-white font-semibold py-3 px-4 rounded-xl transition-all flex flex-col items-center gap-2 shadow-md hover:shadow-lg col-span-2"
         >
-          <span className="text-xl md:text-2xl">📷</span>
-          <span>Instagram</span>
+          <span className="text-2xl">📷</span>
+          <span className="text-sm">Instagram Story</span>
         </button>
-
-        {navigator.share && (
-          <button
-            onClick={useWebShare}
-            className="bg-white/10 hover:bg-white/20 text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 border border-white/20 text-sm md:text-base"
-          >
-            <span className="text-xl md:text-2xl">📤</span>
-            <span>Share</span>
-          </button>
-        )}
       </div>
     </div>
   )

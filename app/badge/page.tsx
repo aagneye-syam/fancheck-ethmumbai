@@ -48,62 +48,68 @@ export default function BadgePage() {
 
   if (!username || fanLevel === null) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-blue to-ethmumbai-red flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+      <main className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-gray-800 text-xl">Loading...</div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-blue to-ethmumbai-red p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-4 md:mb-8">
-          <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-2 md:mb-4">
-            Your ETHMumbai Badge
-          </h1>
-          <p className="text-base md:text-xl text-white/90">
-            @{username} • Fan Level: <span className="text-ethmumbai-red font-bold">{fanLevel}</span>
+    <main className="min-h-screen bg-white py-6 px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Premium Header with Red Accent */}
+        <div className="text-center mb-6">
+          <div className="inline-block">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              Your ETHMumbai Badge
+            </h1>
+            <div className="h-1 bg-gradient-to-r from-ethmumbai-red via-yellow-400 to-ethmumbai-red rounded-full"></div>
+          </div>
+          <p className="text-base md:text-lg text-gray-700 mt-3">
+            @{username} • <span className="text-ethmumbai-red font-bold">Fan Level: {fanLevel}</span>
           </p>
         </div>
 
-        {/* Badge Generator - Only show after image upload decision */}
+        {/* Main Content Grid - Side by Side Layout */}
         {imageUploadDecided && (
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 md:p-8 border border-white/20 mb-4 md:mb-8">
-            <BadgeGenerator
-              username={username}
-              fanLevel={fanLevel}
-              survivalTime={survivalTime || 0}
-              score={score}
-              userImage={userImage}
-              onBadgeGenerated={handleBadgeGenerated}
-            />
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            {/* Left: Badge Preview */}
+            <div className="bg-white rounded-2xl shadow-xl border-2 border-gray-100 p-6">
+              <BadgeGenerator
+                username={username}
+                fanLevel={fanLevel}
+                survivalTime={survivalTime || 0}
+                score={score}
+                userImage={userImage}
+                onBadgeGenerated={handleBadgeGenerated}
+              />
+            </div>
+
+            {/* Right: Share Options */}
+            {badgeImageUrl && (
+              <div className="bg-white rounded-2xl shadow-xl border-2 border-gray-100 p-6">
+                <SocialShare
+                  badgeImageUrl={badgeImageUrl}
+                  username={username}
+                  fanLevel={fanLevel}
+                />
+                
+                {/* Play Again Button */}
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <button
+                    onClick={() => {
+                      useAppStore.getState().reset()
+                      router.push('/play')
+                    }}
+                    className="w-full bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-xl transition-all border border-gray-300"
+                  >
+                    🎮 Play Again
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
-
-        {/* Social Share */}
-        {badgeImageUrl && (
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 md:p-8 border border-white/20">
-            <SocialShare
-              badgeImageUrl={badgeImageUrl}
-              username={username}
-              fanLevel={fanLevel}
-            />
-          </div>
-        )}
-
-        {/* Play Again Button */}
-        <div className="text-center mt-6 md:mt-8">
-          <button
-            onClick={() => {
-              useAppStore.getState().reset()
-              router.push('/play')
-            }}
-            className="bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 md:px-8 rounded-lg transition-colors border border-white/20 text-sm md:text-base"
-          >
-            Play Again
-          </button>
-        </div>
       </div>
 
       {/* Image Upload Modal */}

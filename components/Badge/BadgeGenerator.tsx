@@ -78,7 +78,7 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Hidden canvas for generation - always render it */}
       <canvas 
         ref={canvasCallbackRef} 
@@ -87,32 +87,30 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
         height={1920}
       />
       
-      {/* Badge Preview */}
+      {/* Badge Preview - Compact */}
       <div className="flex justify-center">
-        <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-white/20">
-          {badgeDataUrl ? (
-            <img
-              src={badgeDataUrl}
-              alt="ETHMumbai Badge"
-              className="max-w-sm md:max-w-md lg:max-w-lg h-auto rounded-lg shadow-2xl"
-            />
-          ) : (
-            <div className="flex items-center justify-center min-h-[400px]">
-              <div className="text-center">
-                <div className="text-4xl mb-4 animate-spin">⚙️</div>
-                <p className="text-white text-xl">Generating your badge...</p>
-              </div>
+        {badgeDataUrl ? (
+          <img
+            src={badgeDataUrl}
+            alt="ETHMumbai Badge"
+            className="w-full max-w-[280px] h-auto rounded-xl shadow-lg border-2 border-gray-100"
+          />
+        ) : (
+          <div className="flex items-center justify-center min-h-[300px] w-full">
+            <div className="text-center">
+              <div className="text-4xl mb-3 animate-spin">⚙️</div>
+              <p className="text-gray-700 text-lg font-medium">Generating...</p>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
-      {/* Download Button */}
+      {/* Download Button - Premium Style */}
       {badgeDataUrl && (
         <div className="flex justify-center">
           <button
             onClick={handleDownload}
-            className="bg-ethmumbai-red hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors flex items-center gap-2"
+            className="w-full bg-ethmumbai-red hover:bg-red-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
           >
             <span>⬇️</span>
             <span>Download Badge</span>
