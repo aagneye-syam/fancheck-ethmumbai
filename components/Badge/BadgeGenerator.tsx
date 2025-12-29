@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { generateBadgeImage, downloadBadge } from '@/lib/badgeUtils'
+import html2canvas from 'html2canvas'
+import PremiumCard from './PremiumCard'
+import { downloadBadge } from '@/lib/badgeUtils'
 
 interface BadgeGeneratorProps {
   username: string
@@ -13,100 +15,65 @@ interface BadgeGeneratorProps {
 }
 
 export default function BadgeGenerator({ username, fanLevel, survivalTime, score, userImage, onBadgeGenerated }: BadgeGeneratorProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
   const [badgeDataUrl, setBadgeDataUrl] = useState<string | null>(null)
-  const [isGenerating, setIsGenerating] = useState(true)
-  const [canvasReady, setCanvasReady] = useState(false)
-
-  // Use callback ref to know when canvas is mounted
-  const canvasCallbackRef = (node: HTMLCanvasElement | null) => {
-    if (node) {
-      canvasRef.current = node
-      setCanvasReady(true)
-      console.log('BadgeGenerator: Canvas mounted and ready')
-    }
-  }
+  const [isGenerating, setIsGenerating] = useState(false)
 
   useEffect(() => {
-    if (!canvasReady || !canvasRef.current) {
-      console.log('BadgeGenerator: Waiting for canvas to be ready...', { canvasReady, hasRef: !!canvasRef.current })
-      return
-    }
-
+    // Generate badge image from the card component
     const generateBadge = async () => {
-      console.log('BadgeGenerator: Starting generation', { username, fanLevel, survivalTime, score, hasImage: !!userImage })
-      
-      if (!canvasRef.current) {
-        console.error('BadgeGenerator: Canvas ref is null!')
-        setIsGenerating(false)
-        return
-      }
+      if (!cardRef.current) return
 
       try {
-        console.log('BadgeGenerator: Setting isGenerating to true')
         setIsGenerating(true)
-        console.log('BadgeGenerator: Calling generateBadgeImage...')
-        const dataUrl = await generateBadgeImage(
-          canvasRef.current,
-          username,
-          fanLevel,
-          survivalTime,
-          score,
-          userImage
-        )
-        console.log('BadgeGenerator: Badge generated, dataUrl length:', dataUrl.length)
+        
+        // Wait a bit for images to load
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
+        const canvas = await html2canvas(cardRef.current, {
+          scale: 2,
+          backgroundColor: null,
+          logging: false,
+          useCORS: true,
+          allowTaint: true
+        })
+        
+        const dataUrl = canvas.toDataURL('image/png')
         setBadgeDataUrl(dataUrl)
-        console.log('BadgeGenerator: Badge data URL set, calling onBadgeGenerated callback')
         onBadgeGenerated?.(dataUrl)
-        console.log('BadgeGenerator: All done!')
       } catch (error) {
-        console.error('BadgeGenerator: Error generating badge:', error)
-        setIsGenerating(false)
+        console.error('Error generating badge:', error)
       } finally {
-        console.log('BadgeGenerator: Setting isGenerating to false')
         setIsGenerating(false)
       }
     }
 
     generateBadge()
-  }, [canvasReady, username, fanLevel, survivalTime, score, userImage, onBadgeGenerated])
+  }, [username, fanLevel, survivalTime, score, userImage, onBadgeGenerated])
 
   const handleDownload = () => {
     if (badgeDataUrl) {
-      downloadBadge(badgeDataUrl, `ethmumbai-badge-${username}-${fanLevel}.png`)
+      downloadBadge(badgeDataUrl, `ethmumbai-maxi-${username}-${fanLevel}.png`)
     }
   }
 
   return (
     <div className="space-y-4">
-      {/* Hidden canvas for generation - always render it */}
-      <canvas 
-        ref={canvasCallbackRef} 
-        style={{ display: 'none', position: 'absolute' }}
-        width={1080}
-        height={1920}
-      />
-      
-      {/* Badge Preview - Compact */}
+      {/* Card Preview */}
       <div className="flex justify-center">
-        {badgeDataUrl ? (
-          <img
-            src={badgeDataUrl}
-            alt="ETHMumbai Badge"
-            className="w-full max-w-[280px] h-auto rounded-xl shadow-lg border-2 border-gray-100"
+        <div ref={cardRef}>
+          <PremiumCard
+            username={username}
+            fanLevel={fanLevel}
+            score={score}
+            survivalTime={survivalTime}
+            userImage={userImage}
           />
-        ) : (
-          <div className="flex items-center justify-center min-h-[300px] w-full">
-            <div className="text-center">
-              <div className="text-4xl mb-3 animate-spin">⚙️</div>
-              <p className="text-gray-700 text-lg font-medium">Generating...</p>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
 
-      {/* Download Button - Premium Style */}
-      {badgeDataUrl && (
+      {/* Download Button */}
+      {!isGenerating && badgeDataUrl && (
         <div className="flex justify-center">
           <button
             onClick={handleDownload}
@@ -115,6 +82,12 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
             <span>⬇️</span>
             <span>Download Badge</span>
           </button>
+        </div>
+      )}
+
+      {isGenerating && (
+        <div className="text-center">
+          <div className="text-sm text-gray-600">Preparing your badge...</div>
         </div>
       )}
     </div>
