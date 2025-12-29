@@ -171,7 +171,7 @@ export default function PlayPage() {
                   Survived: <span className="font-bold">{survivalTime}s</span>
                 </p>
                 <p className="text-lg text-white/80 mb-6">
-                  Don't give up! Try again or save your progress!
+                  Don&apos;t give up! Try again or save your progress!
                 </p>
                 <div className="flex flex-col md:flex-row gap-4">
                   <button

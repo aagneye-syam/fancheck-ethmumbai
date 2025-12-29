@@ -59,6 +59,7 @@ export default function ImageUpload({ onImageSelect, onCancel }: ImageUploadProp
           {preview ? (
             <div className="space-y-4">
               <div className="relative w-full h-48 bg-white/10 rounded-lg overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={preview}
                   alt="Preview"

@@ -45,6 +45,7 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ username, fanLevel, score, su
 
         {/* Header */}
         <div className="flex items-center justify-center gap-2 mb-8 z-20">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/ethmumbai-logo.svg" alt="ETHMumbai" className="h-12 w-auto" />
         </div>
 
@@ -76,6 +77,7 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ username, fanLevel, score, su
           <div className="relative">
             <div className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center overflow-hidden">
               {userImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img src={userImage} alt="Avatar" className="w-full h-full object-cover opacity-80" />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-yellow-400 to-red-600 flex items-center justify-center text-white text-3xl font-bold">
@@ -120,7 +122,7 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ username, fanLevel, score, su
           {/* AI Message */}
           <div className="pt-2 border-t border-white/10">
             <p className="text-[10px] text-white/50 italic text-center line-clamp-2">
-              "The journey of a thousand blocks starts with a single hash."
+              &quot;The journey of a thousand blocks starts with a single hash.&quot;
             </p>
           </div>
         </div>
