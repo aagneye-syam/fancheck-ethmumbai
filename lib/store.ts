@@ -7,6 +7,7 @@ interface AppState {
   setUsername: (username: string) => void
   setFanLevel: (level: number) => void
   reset: () => void
+  clearFanLevel: () => void
 }
 
 export const useAppStore = create<AppState>()(
@@ -17,6 +18,7 @@ export const useAppStore = create<AppState>()(
       setUsername: (username) => set({ username }),
       setFanLevel: (fanLevel) => set({ fanLevel }),
       reset: () => set({ username: null, fanLevel: null }),
+      clearFanLevel: () => set({ fanLevel: null }),
     }),
     {
       name: 'ethmumbai-storage',
