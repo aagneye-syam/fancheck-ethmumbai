@@ -104,7 +104,7 @@ export default function PlayPage() {
         )}
 
         {/* Unlocked Game Section */}
-        {gameUnlocked && !gameCompleted && (
+        {gameUnlocked && !gameCompleted && !gameLost && (
           <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 md:p-8 border border-white/20">
             <FlappyBird key={gameKey} onGameOver={handleGameOver} />
           </div>
