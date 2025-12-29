@@ -5,6 +5,8 @@ export interface GameState {
   score: number
   gameOver: boolean
   gameStarted: boolean
+  startTime: number
+  survivalTime: number
 }
 
 const GRAVITY = 0.1
@@ -21,6 +23,8 @@ export const createInitialState = (canvasHeight: number): GameState => ({
   score: 0,
   gameOver: false,
   gameStarted: false,
+  startTime: Date.now(),
+  survivalTime: 0,
 })
 
 export const updateGame = (
@@ -36,13 +40,16 @@ export const updateGame = (
   let newBirdY = state.birdY + state.birdVelocity
   let newVelocity = state.birdVelocity + GRAVITY
 
+  // Calculate survival time
+  const survivalTime = Math.floor((Date.now() - state.startTime) / 1000)
+
   // Check boundaries
   if (newBirdY < 0) {
     newBirdY = 0
     newVelocity = 0
   }
   if (newBirdY + BIRD_SIZE > canvasHeight) {
-    return { ...state, gameOver: true }
+    return { ...state, gameOver: true, survivalTime }
   }
 
   // Update pipes
@@ -94,7 +101,8 @@ export const updateGame = (
       birdRect.x + birdRect.width > pipeRect.x &&
       birdRect.y < pipeRect.y + pipeRect.height
     ) {
-      return { ...state, gameOver: true }
+      const survivalTime = Math.floor((Date.now() - state.startTime) / 1000)
+      return { ...state, gameOver: true, survivalTime }
     }
 
     if (
@@ -102,7 +110,8 @@ export const updateGame = (
       birdRect.x + birdRect.width > pipeRectBottom.x &&
       birdRect.y + birdRect.height > pipeRectBottom.y
     ) {
-      return { ...state, gameOver: true }
+      const survivalTime = Math.floor((Date.now() - state.startTime) / 1000)
+      return { ...state, gameOver: true, survivalTime }
     }
 
     // Score point (0.5 per pillar, max 10)
@@ -131,7 +140,7 @@ export const jump = (state: GameState): GameState => {
     return state
   }
   if (!state.gameStarted) {
-    return { ...state, gameStarted: true }
+    return { ...state, gameStarted: true, startTime: Date.now() }
   }
   return {
     ...state,
