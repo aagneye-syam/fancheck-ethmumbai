@@ -38,7 +38,9 @@ export default function PlayPage() {
   }
 
   const handleGameOver = (level: number, completed: boolean) => {
-    console.log('Game over called:', { level, completed }) // Debug log
+    // Prevent multiple calls
+    if (gameLost || gameCompleted) return
+    
     setFanLevel(level)
     if (completed) {
       setGameCompleted(true)
