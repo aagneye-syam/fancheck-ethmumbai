@@ -23,6 +23,7 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
   const [gameState, setGameState] = useState<GameState | null>(null)
   const gameStateRef = useRef<GameState | null>(null)
   const birdImageRef = useRef<HTMLImageElement | null>(null)
+  const gameOverCalledRef = useRef(false)
 
   // Keep ref in sync with state
   useEffect(() => {
@@ -85,7 +86,8 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
     if (!ctx) return
 
     const gameLoop = () => {
-      if (gameState.gameOver) {
+      if (gameState.gameOver && !gameOverCalledRef.current) {
+        gameOverCalledRef.current = true
         const fanLevel = calculateFanLevel(gameState.score)
         useAppStore.getState().setFanLevel(fanLevel)
         onGameOver(fanLevel, false) // false = lost
@@ -95,7 +97,8 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
       const newState = updateGame(gameState, canvas.width, canvas.height)
       
       // Check for completion (score >= 10)
-      if (newState.score >= 10 && !newState.gameOver) {
+      if (newState.score >= 10 && !newState.gameOver && !gameOverCalledRef.current) {
+        gameOverCalledRef.current = true
         const fanLevel = calculateFanLevel(newState.score)
         useAppStore.getState().setFanLevel(fanLevel)
         onGameOver(fanLevel, true) // true = completed
