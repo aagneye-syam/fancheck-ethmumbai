@@ -12,10 +12,13 @@ export default function BadgePage() {
   const router = useRouter()
   const { username, fanLevel, survivalTime, userImage: storedImage, setUserImage } = useAppStore()
   const [showImageUpload, setShowImageUpload] = useState(true)
-  const [userImage, setUserImage] = useState<string | undefined>(undefined)
+  const [userImage, setLocalUserImage] = useState<string | undefined>(storedImage || undefined)
   const [badgeImageUrl, setBadgeImageUrl] = useState<string>('')
   const [showConfetti, setShowConfetti] = useState(false)
   const [imageUploadDecided, setImageUploadDecided] = useState(false)
+  
+  // Calculate score from fan level (reverse calculation)
+  const score = fanLevel ? fanLevel / 10 : 0
 
   useEffect(() => {
     // Redirect if no username or fan level
