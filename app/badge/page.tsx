@@ -51,21 +51,21 @@ export default function BadgePage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-blue to-ethmumbai-red p-8">
+    <main className="min-h-screen bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-blue to-ethmumbai-red p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+        <div className="text-center mb-4 md:mb-8">
+          <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-2 md:mb-4">
             Your ETHMumbai Badge
           </h1>
-          <p className="text-xl text-white/90">
+          <p className="text-base md:text-xl text-white/90">
             @{username} • Fan Level: <span className="text-ethmumbai-red font-bold">{fanLevel}</span>
           </p>
         </div>
 
         {/* Badge Generator - Only show after image upload decision */}
         {imageUploadDecided && (
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-8 border border-white/20 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 md:p-8 border border-white/20 mb-4 md:mb-8">
             <BadgeGenerator
               username={username}
               fanLevel={fanLevel}
@@ -77,7 +77,7 @@ export default function BadgePage() {
 
         {/* Social Share */}
         {badgeImageUrl && (
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-8 border border-white/20">
+          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 md:p-8 border border-white/20">
             <SocialShare
               badgeImageUrl={badgeImageUrl}
               username={username}
@@ -87,13 +87,13 @@ export default function BadgePage() {
         )}
 
         {/* Play Again Button */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-6 md:mt-8">
           <button
             onClick={() => {
               useAppStore.getState().reset()
               router.push('/play')
             }}
-            className="bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-8 rounded-lg transition-colors border border-white/20"
+            className="bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 md:px-8 rounded-lg transition-colors border border-white/20 text-sm md:text-base"
           >
             Play Again
           </button>

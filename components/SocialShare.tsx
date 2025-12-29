@@ -53,57 +53,57 @@ export default function SocialShare({ badgeImageUrl, username, fanLevel }: Socia
 
   return (
     <div className="space-y-4">
-      <h3 className="text-2xl font-bold text-white text-center mb-6">
+      <h3 className="text-xl md:text-2xl font-bold text-white text-center mb-4 md:mb-6">
         Share Your Badge
       </h3>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
         <button
           onClick={shareToTwitter}
-          className="bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white font-bold py-4 px-6 rounded-lg transition-colors flex flex-col items-center gap-2"
+          className="bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
         >
-          <span className="text-2xl">🐦</span>
+          <span className="text-xl md:text-2xl">🐦</span>
           <span>Twitter/X</span>
         </button>
 
         <button
           onClick={shareToLinkedIn}
-          className="bg-[#0077B5] hover:bg-[#006399] text-white font-bold py-4 px-6 rounded-lg transition-colors flex flex-col items-center gap-2"
+          className="bg-[#0077B5] hover:bg-[#006399] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
         >
-          <span className="text-2xl">💼</span>
+          <span className="text-xl md:text-2xl">💼</span>
           <span>LinkedIn</span>
         </button>
 
         <button
           onClick={shareToFacebook}
-          className="bg-[#1877F2] hover:bg-[#166fe5] text-white font-bold py-4 px-6 rounded-lg transition-colors flex flex-col items-center gap-2"
+          className="bg-[#1877F2] hover:bg-[#166fe5] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
         >
-          <span className="text-2xl">📘</span>
+          <span className="text-xl md:text-2xl">📘</span>
           <span>Facebook</span>
         </button>
 
         <button
           onClick={shareToWhatsApp}
-          className="bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-4 px-6 rounded-lg transition-colors flex flex-col items-center gap-2"
+          className="bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
         >
-          <span className="text-2xl">💬</span>
+          <span className="text-xl md:text-2xl">💬</span>
           <span>WhatsApp</span>
         </button>
 
         <button
           onClick={shareToInstagram}
-          className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] hover:opacity-90 text-white font-bold py-4 px-6 rounded-lg transition-opacity flex flex-col items-center gap-2"
+          className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] hover:opacity-90 text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-opacity flex flex-col items-center gap-1 md:gap-2 text-sm md:text-base"
         >
-          <span className="text-2xl">📷</span>
+          <span className="text-xl md:text-2xl">📷</span>
           <span>Instagram</span>
         </button>
 
         {navigator.share && (
           <button
             onClick={useWebShare}
-            className="bg-white/10 hover:bg-white/20 text-white font-bold py-4 px-6 rounded-lg transition-colors flex flex-col items-center gap-2 border border-white/20"
+            className="bg-white/10 hover:bg-white/20 text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex flex-col items-center gap-1 md:gap-2 border border-white/20 text-sm md:text-base"
           >
-            <span className="text-2xl">📤</span>
+            <span className="text-xl md:text-2xl">📤</span>
             <span>Share</span>
           </button>
         )}
