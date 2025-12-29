@@ -14,6 +14,7 @@ export default function PlayPage() {
   const [gameCompleted, setGameCompleted] = useState(false)
   const [gameLost, setGameLost] = useState(false)
   const [fanLevel, setFanLevel] = useState<number | null>(null)
+  const [survivalTime, setSurvivalTime] = useState<number>(0)
   const [gameKey, setGameKey] = useState(0)
   const [showCompletionPopup, setShowCompletionPopup] = useState(false)
 
@@ -37,11 +38,13 @@ export default function PlayPage() {
     setGameUnlocked(true)
   }
 
-  const handleGameOver = (level: number, completed: boolean) => {
+  const handleGameOver = (level: number, completed: boolean, time: number) => {
     // Prevent multiple calls
     if (gameLost || gameCompleted) return
     
     setFanLevel(level)
+    setSurvivalTime(time)
+    
     if (completed) {
       setGameCompleted(true)
       setShowCompletionPopup(true)
@@ -58,6 +61,7 @@ export default function PlayPage() {
     setGameLost(false)
     setGameCompleted(false)
     setFanLevel(null)
+    setSurvivalTime(0)
     setShowCompletionPopup(false)
     clearFanLevel()
     setGameKey(Date.now())
@@ -149,7 +153,10 @@ export default function PlayPage() {
                   Game Over! 😢
                 </h2>
                 <p className="text-xl md:text-2xl text-white/90 mb-2">
-                  Your Fan Level: <span className="text-ethmumbai-red font-bold">{fanLevel}</span>
+                  Fan Level: <span className="text-ethmumbai-red font-bold">{fanLevel}</span>
+                </p>
+                <p className="text-lg text-white/90 mb-2">
+                  Survived: <span className="font-bold">{survivalTime}s</span>
                 </p>
                 <p className="text-lg text-white/80 mb-6">
                   Don't give up! Try again or save your progress!
