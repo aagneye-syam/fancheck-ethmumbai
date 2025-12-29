@@ -10,9 +10,9 @@ export interface GameState {
 const GRAVITY = 0.5
 const JUMP_STRENGTH = -8
 const PIPE_SPEED = 2
-const PIPE_WIDTH = 60
-const PIPE_GAP = 150
-const BIRD_SIZE = 30
+export const PIPE_WIDTH = 60
+export const PIPE_GAP = 150
+export const BIRD_SIZE = 30
 
 export const createInitialState = (canvasHeight: number): GameState => ({
   birdY: canvasHeight / 2,
@@ -141,8 +141,4 @@ export const calculateFanLevel = (score: number): number => {
   // Cap at 100
   return Math.min(100, Math.floor(score * 2))
 }
-
-export const BIRD_SIZE = BIRD_SIZE
-export const PIPE_WIDTH = PIPE_WIDTH
-export const PIPE_GAP = PIPE_GAP
 
