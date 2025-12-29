@@ -12,7 +12,7 @@ const JUMP_STRENGTH = -6
 const PIPE_SPEED = 2
 export const PIPE_WIDTH = 60
 export const PIPE_GAP = 150
-export const BIRD_SIZE = 40
+export const BIRD_SIZE = 60
 
 export const createInitialState = (canvasHeight: number): GameState => ({
   birdY: canvasHeight / 2,
@@ -66,7 +66,7 @@ export const updateGame = (
   // Check collisions
   const birdX = 100
   const birdRect = {
-    x: birdX,
+    x: birdX - BIRD_SIZE / 2, // Center the collision box to match visual position
     y: newBirdY,
     width: BIRD_SIZE,
     height: BIRD_SIZE,
