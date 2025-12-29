@@ -135,6 +135,40 @@ export default function PlayPage() {
             </div>
           </div>
         )}
+
+        {/* Game Over Popup */}
+        {gameLost && fanLevel !== null && (
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-red to-ethmumbai-blue rounded-lg p-8 md:p-12 max-w-md w-full border-4 border-white/30 shadow-2xl">
+              <div className="text-center space-y-6">
+                <div className="text-6xl md:text-8xl mb-4">💥</div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                  Game Over! 😢
+                </h2>
+                <p className="text-xl md:text-2xl text-white/90 mb-2">
+                  Your Fan Level: <span className="text-ethmumbai-red font-bold">{fanLevel}</span>
+                </p>
+                <p className="text-lg text-white/80 mb-6">
+                  Don't give up! Try again or save your progress!
+                </p>
+                <div className="flex flex-col md:flex-row gap-4">
+                  <button
+                    onClick={handleMakeCard}
+                    className="flex-1 bg-ethmumbai-blue hover:bg-blue-600 text-white font-bold text-lg py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                  >
+                    Print Card 🎴
+                  </button>
+                  <button
+                    onClick={handleRestartGame}
+                    className="flex-1 bg-ethmumbai-red hover:bg-red-600 text-white font-bold text-lg py-3 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                  >
+                    Restart Game 🔄
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   )
