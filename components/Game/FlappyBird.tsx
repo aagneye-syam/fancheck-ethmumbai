@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   GameState,
   createInitialState,
@@ -21,11 +21,11 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationFrameRef = useRef<number>()
   const [gameState, setGameState] = useState<GameState | null>(null)
+  const gameStateRef = useRef<GameState | null>(null)
 
-  const handleJump = useCallback(() => {
-    if (gameState) {
-      setGameState(jump(gameState))
-    }
+  // Keep ref in sync with state
+  useEffect(() => {
+    gameStateRef.current = gameState
   }, [gameState])
 
   useEffect(() => {
@@ -44,12 +44,18 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.code === 'Space') {
         e.preventDefault()
-        handleJump()
+        const currentState = gameStateRef.current
+        if (currentState) {
+          setGameState(jump(currentState))
+        }
       }
     }
 
     const handleClick = () => {
-      handleJump()
+      const currentState = gameStateRef.current
+      if (currentState) {
+        setGameState(jump(currentState))
+      }
     }
 
     window.addEventListener('keydown', handleKeyPress)
@@ -59,7 +65,7 @@ export default function FlappyBird({ onGameOver }: FlappyBirdProps) {
       window.removeEventListener('keydown', handleKeyPress)
       canvas.removeEventListener('click', handleClick)
     }
-  }, [handleJump])
+  }, [])
 
   useEffect(() => {
     if (!gameState || !canvasRef.current) return
