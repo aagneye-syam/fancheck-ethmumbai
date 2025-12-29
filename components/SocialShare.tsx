@@ -10,30 +10,51 @@ export default function SocialShare({ badgeImageUrl, username, fanLevel }: Socia
   const shareText = `I'm a ${fanLevel}/100 ETHMumbai Maxi! Check your fan level at ETHMumbai Maxi Checker! 🔥 @${username}`
   const shareUrl = typeof window !== 'undefined' ? window.location.origin : ''
 
+  const downloadAndShareImage = async () => {
+    // Download the badge image for sharing
+    const link = document.createElement('a')
+    link.download = `ethmumbai-badge-${username}.png`
+    link.href = badgeImageUrl
+    link.click()
+  }
+
   const shareToTwitter = () => {
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`
-    window.open(twitterUrl, '_blank', 'width=550,height=420')
+    downloadAndShareImage()
+    setTimeout(() => {
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`
+      window.open(twitterUrl, '_blank', 'width=550,height=420')
+    }, 500)
   }
 
   const shareToLinkedIn = () => {
-    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`
-    window.open(linkedInUrl, '_blank', 'width=550,height=420')
+    downloadAndShareImage()
+    setTimeout(() => {
+      const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`
+      window.open(linkedInUrl, '_blank', 'width=550,height=420')
+    }, 500)
   }
 
   const shareToFacebook = () => {
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
-    window.open(facebookUrl, '_blank', 'width=550,height=420')
+    downloadAndShareImage()
+    setTimeout(() => {
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
+      window.open(facebookUrl, '_blank', 'width=550,height=420')
+    }, 500)
   }
 
   const shareToWhatsApp = () => {
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`
-    window.open(whatsappUrl, '_blank')
+    downloadAndShareImage()
+    setTimeout(() => {
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`
+      window.open(whatsappUrl, '_blank')
+    }, 500)
   }
 
   const shareToInstagram = () => {
-    // Instagram doesn't support direct URL sharing, so we'll download the image
-    // and show instructions
-    alert('To share on Instagram Story:\n1. Download the badge image\n2. Open Instagram\n3. Upload the image to your story\n4. Tag @ethmumbai!')
+    downloadAndShareImage()
+    setTimeout(() => {
+      alert('Badge downloaded! 📸\n\nTo share on Instagram Story:\n1. Open Instagram app\n2. Create a new Story\n3. Upload the downloaded badge image\n4. Tag @ethmumbai!\n\nThe image is in your Downloads folder.')
+    }, 500)
   }
 
   const useWebShare = async () => {
