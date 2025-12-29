@@ -12,8 +12,10 @@ export default function PlayPage() {
   const [localUsername, setLocalUsername] = useState<string | null>(null)
   const [gameUnlocked, setGameUnlocked] = useState(false)
   const [gameCompleted, setGameCompleted] = useState(false)
+  const [gameLost, setGameLost] = useState(false)
   const [fanLevel, setFanLevel] = useState<number | null>(null)
   const [gameKey, setGameKey] = useState(0)
+  const [showCompletionPopup, setShowCompletionPopup] = useState(false)
 
   useEffect(() => {
     // Clear fan level on page load to restart game
@@ -35,14 +37,27 @@ export default function PlayPage() {
     setGameUnlocked(true)
   }
 
-  const handleGameOver = (level: number) => {
-    setGameCompleted(true)
+  const handleGameOver = (level: number, completed: boolean) => {
     setFanLevel(level)
-    
-    // Redirect to badge page after a short delay
-    setTimeout(() => {
-      router.push('/badge')
-    }, 2000)
+    if (completed) {
+      setGameCompleted(true)
+      setShowCompletionPopup(true)
+    } else {
+      setGameLost(true)
+    }
+  }
+
+  const handleMakeCard = () => {
+    router.push('/badge')
+  }
+
+  const handleRestartGame = () => {
+    setGameLost(false)
+    setGameCompleted(false)
+    setFanLevel(null)
+    setShowCompletionPopup(false)
+    clearFanLevel()
+    setGameKey(Date.now())
   }
 
   return (
@@ -95,19 +110,29 @@ export default function PlayPage() {
           </div>
         )}
 
-        {/* Game Completed Section */}
-        {gameCompleted && fanLevel !== null && (
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-6 md:p-8 border border-white/20 text-center">
-            <div className="text-4xl md:text-6xl mb-4">🎉</div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Game Over!
-            </h2>
-            <p className="text-xl md:text-2xl text-white mb-2">
-              Your Fan Level: <span className="text-ethmumbai-red font-bold">{fanLevel}</span>
-            </p>
-            <p className="text-sm md:text-base text-white/80">
-              Redirecting to badge generation...
-            </p>
+        {/* Completion Popup */}
+        {showCompletionPopup && (
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-gradient-to-br from-ethmumbai-blue to-ethmumbai-red rounded-lg p-8 md:p-12 max-w-md w-full border-4 border-white/30 shadow-2xl">
+              <div className="text-center space-y-6">
+                <div className="text-6xl md:text-8xl mb-4">🏆</div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                  Congratulations! 🎉
+                </h2>
+                <p className="text-xl md:text-2xl text-white/90 mb-4">
+                  You scored 10/10!
+                </p>
+                <p className="text-lg text-white/80 mb-6">
+                  Make the card and show off your ETHMumbai Maxi status!
+                </p>
+                <button
+                  onClick={handleMakeCard}
+                  className="w-full bg-white hover:bg-white/90 text-ethmumbai-red font-bold text-xl py-4 px-8 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                >
+                  Make the Card 🎴
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
