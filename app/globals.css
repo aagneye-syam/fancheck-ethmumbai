@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ethmumbai-red: #FF0000;
+  --ethmumbai-blue: #0066FF;
+  --ethmumbai-dark: #1a1a1a;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--ethmumbai-dark);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: var(--ethmumbai-red);
+  animation: confetti 3s linear forwards;
+  pointer-events: none;
+}
+
+.confetti:nth-child(odd) {
+  background: var(--ethmumbai-blue);
+}
+
+.confetti:nth-child(3n) {
+  background: #FFD700;
+}
+
+.confetti:nth-child(4n) {
+  background: #00FF00;
+}
+
