@@ -126,7 +126,7 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ username, fanLevel, score, su
         </div>
 
         {/* Footer Badge */}
-        <div className="mt-8 z-20">
+        <div className="mt-6 z-20">
           <div className="bg-gradient-to-r from-[#8c671b] via-[#d4af37] to-[#8c671b] px-10 py-2 rounded-lg border-2 border-[#5c430e] shadow-xl">
              <span className="text-black font-bold text-lg tracking-tighter italic">
                {edition}
@@ -135,12 +135,9 @@ const PremiumCard: React.FC<PremiumCardProps> = ({ username, fanLevel, score, su
         </div>
 
         {/* Final Info Text */}
-        <div className="mt-auto mb-6 text-white/40 font-mono text-[10px] tracking-widest z-20">
+        <div className="mt-4 mb-4 text-white/40 font-mono text-[10px] tracking-widest z-20">
           FAN-ID: {fanId}
         </div>
-
-        {/* Action Buttons Shadow Bottom */}
-        <div className="absolute -bottom-24 left-0 right-0 h-40 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
 
       </div>
 
