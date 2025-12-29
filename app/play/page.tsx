@@ -38,6 +38,7 @@ export default function PlayPage() {
   }
 
   const handleGameOver = (level: number, completed: boolean) => {
+    console.log('Game over called:', { level, completed }) // Debug log
     setFanLevel(level)
     if (completed) {
       setGameCompleted(true)
@@ -137,7 +138,7 @@ export default function PlayPage() {
         )}
 
         {/* Game Over Popup */}
-        {gameLost && fanLevel !== null && (
+        {gameLost && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-red to-ethmumbai-blue rounded-lg p-8 md:p-12 max-w-md w-full border-4 border-white/30 shadow-2xl">
               <div className="text-center space-y-6">
