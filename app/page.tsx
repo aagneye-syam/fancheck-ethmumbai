@@ -1,20 +1,26 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-blue to-ethmumbai-red p-8">
-      <div className="text-center space-y-8 max-w-4xl">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-ethmumbai-dark via-ethmumbai-blue to-ethmumbai-red p-4 md:p-8">
+      <div className="text-center space-y-8 max-w-4xl w-full px-4">
         {/* Logo */}
-        <div className="mb-8">
-          <div className="inline-block bg-ethmumbai-blue p-4 rounded-lg transform rotate-45 mb-4">
-            <span className="text-white font-bold text-xl transform -rotate-45 block">ETHMUMBAI</span>
-          </div>
+        <div className="mb-8 flex justify-center">
+          <Image
+            src="/assets/ethmumbai-logo.svg"
+            alt="ETHMumbai Logo"
+            width={200}
+            height={80}
+            className="w-48 md:w-64 h-auto"
+            priority
+          />
         </div>
 
         {/* Title */}
-        <h1 className="text-6xl md:text-8xl font-bold text-white mb-4">
+        <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white mb-4">
           ETHMumbai Maxi Checker
         </h1>
 
@@ -29,7 +35,7 @@ export default function Home() {
         {/* CTA Button */}
         <Link
           href="/play"
-          className="inline-block bg-ethmumbai-red hover:bg-red-600 text-white font-bold text-xl px-12 py-6 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+          className="inline-block bg-ethmumbai-red hover:bg-red-600 text-white font-bold text-lg md:text-xl px-8 md:px-12 py-4 md:py-6 rounded-lg transition-all transform hover:scale-105 shadow-lg"
         >
           Start Playing 🔥
         </Link>
