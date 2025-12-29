@@ -20,8 +20,17 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
   useEffect(() => {
     const generateBadge = async () => {
       console.log('BadgeGenerator: Starting generation', { username, fanLevel, survivalTime, score, hasImage: !!userImage })
+      
+      // Wait for canvas to be available
+      let attempts = 0
+      while (!canvasRef.current && attempts < 10) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        attempts++
+      }
+      
       if (!canvasRef.current) {
-        console.error('BadgeGenerator: Canvas ref is null!')
+        console.error('BadgeGenerator: Canvas ref is still null after waiting!')
+        setIsGenerating(false)
         return
       }
 
@@ -51,7 +60,12 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
       }
     }
 
-    generateBadge()
+    // Use setTimeout to ensure DOM is ready
+    const timer = setTimeout(() => {
+      generateBadge()
+    }, 100)
+
+    return () => clearTimeout(timer)
   }, [username, fanLevel, survivalTime, score, userImage, onBadgeGenerated])
 
   const handleDownload = () => {
@@ -98,7 +112,12 @@ export default function BadgeGenerator({ username, fanLevel, survivalTime, score
       </div>
 
       {/* Hidden canvas for generation */}
-      <canvas ref={canvasRef} className="hidden" />
+      <canvas 
+        ref={canvasRef} 
+        style={{ display: 'none' }}
+        width={1080}
+        height={1920}
+      />
     </div>
   )
 }
