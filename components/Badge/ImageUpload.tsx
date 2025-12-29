@@ -44,7 +44,8 @@ export default function ImageUpload({ onImageSelect, onCancel }: ImageUploadProp
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-ethmumbai-dark border-2 border-ethmumbai-blue rounded-lg p-6 max-w-md w-full">
-        <h3 className="text-2xl font-bold text-white mb-4">Add Picture to Badge</h3>
+        <h3 className="text-2xl font-bold text-white mb-4">Upload Your Picture</h3>
+        <p className="text-white/80 mb-4 text-sm">Required for your badge</p>
         
         <div className="mb-4">
           <input
@@ -91,19 +92,17 @@ export default function ImageUpload({ onImageSelect, onCancel }: ImageUploadProp
         </div>
 
         <div className="flex gap-4">
-          <button
-            onClick={onCancel}
-            className="flex-1 bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-4 rounded-lg transition-colors"
-          >
-            Skip
-          </button>
-          {preview && (
+          {preview ? (
             <button
               onClick={handleConfirm}
-              className="flex-1 bg-ethmumbai-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+              className="w-full bg-ethmumbai-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
             >
-              Use This Image
+              Continue with This Image
             </button>
+          ) : (
+            <p className="w-full text-center text-white/70 py-3">
+              Please upload an image to continue
+            </p>
           )}
         </div>
       </div>
