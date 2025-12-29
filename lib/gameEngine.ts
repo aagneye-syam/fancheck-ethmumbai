@@ -7,8 +7,8 @@ export interface GameState {
   gameStarted: boolean
 }
 
-const GRAVITY = 0.5
-const JUMP_STRENGTH = -8
+const GRAVITY = 0.3
+const JUMP_STRENGTH = -6
 const PIPE_SPEED = 2
 export const PIPE_WIDTH = 60
 export const PIPE_GAP = 150
